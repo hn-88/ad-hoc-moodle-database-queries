@@ -1,6 +1,6 @@
 select distinct
 FROM_UNIXTIME(fc.timemodified) as Time, fc.userid, u.idnumber, u.username, u.firstname, u.lastname, u.email, u.institution, 
-fv.value as "Email entered",
+fv.value as "Email entered", c.fullname as BSS,
 (select fv2.value
 from
 {feedback_value} fv2
@@ -56,7 +56,7 @@ left join {feedback_item} fi3 on fi3.id = fv3.item
 left join {feedback_completed} fc3 on fc3.id = fv3.completed
 where
 fc.timemodified = fc3.timemodified
-and fi3.name like '%Value%ontent%') as "VC",
+and fi3.name like '%Value%ontent%gained.') as "VC",
 (select fv3.value
 from
 {feedback_value} fv3
@@ -64,60 +64,14 @@ left join {feedback_item} fi3 on fi3.id = fv3.item
 left join {feedback_completed} fc3 on fc3.id = fv3.completed
 where
 fc.timemodified = fc3.timemodified
-and fi3.name like '%Interest%side%') as "IA",
-(select fv3.value
-from
-{feedback_value} fv3
-left join {feedback_item} fi3 on fi3.id = fv3.item
-left join {feedback_completed} fc3 on fc3.id = fv3.completed
-where
-fc.timemodified = fc3.timemodified
-and fi3.name like '%Common%oints%1%ultimedia%IIEP%') as "Comm. 1",
-(select fv3.value
-from
-{feedback_value} fv3
-left join {feedback_item} fi3 on fi3.id = fv3.item
-left join {feedback_completed} fc3 on fc3.id = fv3.completed
-where
-fc.timemodified = fc3.timemodified
-and fi3.name like '%Common%oints%2%relevant%age%') as "Comm. 2",
-(select fv3.value
-from
-{feedback_value} fv3
-left join {feedback_item} fi3 on fi3.id = fv3.item
-left join {feedback_completed} fc3 on fc3.id = fv3.completed
-where
-fc.timemodified = fc3.timemodified
-and fi3.name like '%Common%oints%3%asset%time%') as "Comm. 3",
-(select fv3.value
-from
-{feedback_value} fv3
-left join {feedback_item} fi3 on fi3.id = fv3.item
-left join {feedback_completed} fc3 on fc3.id = fv3.completed
-where
-fc.timemodified = fc3.timemodified
-and fi3.name like '%Common%oints%4%grammatically%correct%') as "Comm. 4",
-(select fv3.value
-from
-{feedback_value} fv3
-left join {feedback_item} fi3 on fi3.id = fv3.item
-left join {feedback_completed} fc3 on fc3.id = fv3.completed
-where
-fc.timemodified = fc3.timemodified
-and fi3.name like '%Common%oints%5%specific%correction%') as "Comm. 5",
-(select fv3.value
-from
-{feedback_value} fv3
-left join {feedback_item} fi3 on fi3.id = fv3.item
-left join {feedback_completed} fc3 on fc3.id = fv3.completed
-where
-fc.timemodified = fc3.timemodified
-and fi3.name like '%Common%oints%6%specific%suggestion%') as "Comm. 6"
+and fi3.name like '%Interest%side%') as "IA"
 from
 {feedback_value} fv
 left join {feedback_completed} fc on fc.id = fv.completed
 left join {user} u on fc.userid = u.id
 left join {feedback_item} fi on fi.id = fv.item
+left join {feedback} f on f.id = fi.feedback
+left join {course} c on c.id = f.course
 where
 fc.timemodified > :fromdate
 and fc.timemodified < :todate
