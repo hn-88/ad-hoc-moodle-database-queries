@@ -8,7 +8,8 @@ left join {feedback_item} fi2 on fi2.id = fv2.item
 left join {feedback_completed} fc2 on fc2.id = fv2.completed
 where
 fc.timemodified = fc2.timemodified
-and fi2.name like '%Chapter%') as "Chapter name",
+and fi2.name like '%Chapter%'
+and fi2.typ = 'textfield') as "Chapter name",
 (select fv3.value
 from
 {feedback_value} fv3
