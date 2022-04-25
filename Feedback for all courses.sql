@@ -9,7 +9,7 @@ left join {feedback_completed} fc2 on fc2.id = fv2.completed
 where
 fc.timemodified = fc2.timemodified
 and fi2.name like '%Chapter%'
-and fi2.typ = 'textfield') as "Chapter name",
+and fi2.typ = 'textfield') as "Chapter name", -- actually duplicate timestamp was responsible
 (select fv3.value
 from
 {feedback_value} fv3
