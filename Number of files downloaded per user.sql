@@ -1,13 +1,15 @@
 select distinct u.id, u.idnumber, u.username, u.firstname, u.lastname, u.email, u.institution, 
 (select count(*) from
-{logstore_standard_log} ltwo
+{logstore_standard_log} l2
+left join {files} f2 on l2.contextid = f2.contextid
 where
-ltwo.timecreated > :from2date
-and ltwo.timecreated < :to2date
-and ltwo.action = 'viewed' 
-and ltwo.target='course_module'  
-and ( ltwo.objecttable = 'folder' or ltwo.objecttable = 'resource' )
-and ltwo.userid = l.userid
+l2.timecreated > :from2date
+and l2.timecreated < :to2date
+and l2.action = 'viewed' 
+and l2.target='course_module'  
+and ( l2.objecttable = 'folder' or l2.objecttable = 'resource' )
+and f2.filesize > 0
+and l2.userid = l.userid
 ) as "Count of files downloaded"
 from 
 {logstore_standard_log} l
