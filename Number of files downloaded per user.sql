@@ -1,5 +1,5 @@
 select distinct u.id, u.idnumber, u.username, u.firstname, u.lastname, u.email, u.institution, 
-(select count(*) from
+(select count(distinct f2.filename) from
 {logstore_standard_log} l2
 left join {files} f2 on l2.contextid = f2.contextid
 where
