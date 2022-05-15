@@ -13,3 +13,4 @@ and l.target='course_module'
 and ( l.objecttable = 'folder' or l.objecttable = 'resource' )
 and u.idnumber like :idnum
 and u.username like :usernameparam
+and f.filesize > 0
