@@ -7,7 +7,7 @@
 -- https://moodleschema.zoola.io/tables/files.html
 
 
-select count(*) as "All ppt(x) files",
-count(distinct f.contenthash) as "Only unique ppt(x) files"
+select count(*) as "All ppt(x) and mp3/mp4 files",
+count(distinct f.contenthash) as "Only unique ppt(x) and mp3/mp4 files"
 from {files} f
-where f.filename like '%ppt%'
+where f.filename like '%ppt%' or f.filename like '%mp%'
