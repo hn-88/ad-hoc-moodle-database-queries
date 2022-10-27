@@ -6,11 +6,15 @@ select co2.fullname,
 (select
   count(*) 
   from {files} f
-  INNER JOIN {context} c ON f.contextid = c.id
-  INNER JOIN {resource} r ON c.instanceid = r.id
-  INNER JOIN {course} co ON r.course = co.id
-  where (f.filename like '%ppt%' or f.filename like '%mp%')
-  and co.id = co2.id ) as "total ppt & mp3,mp4" 
+  left join {context} cont on f.contextid = cont.id
+  left join {course_modules} vcm on cont.instanceid = vcm.id 
+  where 
+  vcm.course=co2.id 
+  and vcm.module=8 
+  and cont.contextlevel = 70 
+  and f.component ='mod_folder'
+  and (f.filename like '%.ppt%' or f.filename like '%.mp%')
+   ) as "total ppt & mp3 & mp4" 
 from 
 {course} co2
 where co2.fullname like '%tandar%'
