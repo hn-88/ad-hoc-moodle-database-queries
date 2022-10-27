@@ -17,14 +17,23 @@
 -- https://www.w3resource.com/sql/aggregate-functions/count-function.php
 -- https://moodleschema.zoola.io/tables/files.html
 -- https://stackoverflow.com/questions/15938185/selecting-all-the-files-along-with-their-paths-of-a-course-in-moodle
+-- Explanation of context table - https://moodle.org/mod/forum/discuss.php?d=202588
+-- From https://docs.moodle.org/400/en/course_display
+-- "contextlevel 70 is modules, then instanceid points to the mdl_course_modules table" 
+-- so in the relevant context table entry, 
+-- the instanceid points to course_modules table
 
 
 select 
 count(*) as "All ppt(x) and mp3/mp4 files",
 count(distinct f.contenthash) as "Only unique ppt(x) and mp3/mp4 files"
 from {files} f
-INNER JOIN {context} c ON f.contextid = c.id
-INNER JOIN {resource} r ON c.instanceid = r.id
-INNER JOIN {course} co ON r.course = co.id
-where (f.filename like '%ppt%' or f.filename like '%mp%')
-and co.fullname like :coursename
+  left join {context} cont on f.contextid = cont.id
+  left join {course_modules} vcm on cont.instanceid = vcm.id 
+  where 
+  vcm.course=co.id 
+  and vcm.module=8 
+  and cont.contextlevel = 70 
+  and f.component ='mod_folder'
+  and (f.filename like '%.ppt%' or f.filename like '%.mp%')
+  and co.fullname like :coursename
