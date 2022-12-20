@@ -1,4 +1,6 @@
-select distinct u.id, u.idnumber, u.username, u.firstname, u.lastname, u.email, u.institution, c.shortname, vcs.name as "Course Module",  f.filename as "File downloaded" 
+select distinct u.id, u.idnumber, u.username, 
+u.firstname, u.lastname, u.email, u.institution, c.shortname, vcs.name as "Course Module",  
+f.filename as "File downloaded", FROM_UNIXTIME(l.timecreated) as "Timestamp" 
 from 
 {logstore_standard_log} l
 left join {course} c on l.courseid = c.id
