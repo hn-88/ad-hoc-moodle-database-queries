@@ -1,4 +1,5 @@
-select distinct u.id, u.idnumber, u.username, u.firstname, u.lastname, u.email, u.institution, c.shortname, r.name as "Resource viewed" 
+select distinct u.id, u.idnumber, u.username, u.firstname, u.lastname, u.email, 
+u.institution, c.shortname, r.name as "Resource viewed" , FROM_UNIXTIME(l.timecreated) as "Timestamp"
 from 
 {logstore_standard_log} l
 left join {course} c on l.courseid = c.id
