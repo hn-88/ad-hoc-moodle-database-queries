@@ -1,0 +1,31 @@
+--When only distinct files are needed
+select count(DISTINCT(f.contenthash)) from prefix_files f 
+where f.filename like 'DD%'
+
+--When all duplicates in different courses are to be counted
+select count(*) from prefix_files f 
+where f.filename like 'DD%'
+
+--When only files with at least one download are to be listed
+select count(DISTINCT concat(f.contenthash,l.contextinstanceid)) from 
+prefix_logstore_standard_log l
+left join prefix_files f on l.contextid = f.contextid
+where l.action = 'viewed' 
+and l.target='course_module'
+and f.filename like 'DD%'
+
+--When only unique files with at least one download are to be listed
+select count(DISTINCT f.contenthash) from 
+prefix_logstore_standard_log l
+left join prefix_files f on l.contextid = f.contextid
+where l.action = 'viewed' 
+and l.target='course_module'
+and f.filename like 'DD%'
+
+--Counting all downloads of one type
+select count(*) from 
+prefix_logstore_standard_log l
+left join prefix_files f on l.contextid = f.contextid
+where l.action = 'viewed' 
+and l.target='course_module'
+and f.filename like 'DD%'
