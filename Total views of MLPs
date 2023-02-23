@@ -1,4 +1,4 @@
-select vr.name from prefix_logstore_standard_log vlsl 
+select count(*) from prefix_logstore_standard_log vlsl 
 join prefix_resource vr on vr.id = vlsl.objectid 
 where vlsl.target = 'course_module'
 and vlsl.`action` = 'viewed'
