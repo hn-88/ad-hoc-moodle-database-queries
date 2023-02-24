@@ -4,3 +4,19 @@ where vlsl.target = 'course_module'
 and vlsl.`action` = 'viewed'
 and vlsl.component = 'mod_resource'
 and vr.name not like '%CCDP%'
+
+and course-wise view,
+select c.fullname as "Course name", 
+ (select count(vlsl.id) as "MLP read count" from 
+ prefix_logstore_standard_log vlsl  
+ join prefix_resource vr on vr.id = vlsl.objectid 
+ where vlsl.userid = 17
+ and c.id = vlsl.courseid
+ and vlsl.target = 'course_module'
+ and vlsl.`action` = 'viewed'
+ and vlsl.component = 'mod_resource'
+and vr.name not like '%CCDP%')
+from
+prefix_course c
+
+The above took 80 seconds for 200 results, (limiting to one userid)
