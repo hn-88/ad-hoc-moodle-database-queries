@@ -16,7 +16,13 @@ SELECT
     MAX(CASE WHEN fi2.name LIKE '%Assessment%' THEN fv2.value ELSE NULL END) AS "QA",
     MAX(CASE WHEN fi2.name LIKE '%Day%day%elevan%' THEN fv2.value ELSE NULL END) AS "DD",
     MAX(CASE WHEN fi2.name LIKE '%Value%ontent%gained.' THEN fv2.value ELSE NULL END) AS "VC",
-    MAX(CASE WHEN fi2.name LIKE '%Interest%side%' THEN fv2.value ELSE NULL END) AS "IA"
+    MAX(CASE WHEN fi2.name LIKE '%Interest%side%' THEN fv2.value ELSE NULL END) AS "IA",
+    MAX(CASE WHEN fi2.name LIKE '%ommon%oint%1%' THEN fv2.value ELSE NULL END) AS "Comm 1",
+    MAX(CASE WHEN fi2.name LIKE '%ommon%oint%2%' THEN fv2.value ELSE NULL END) AS "Comm 2",
+    MAX(CASE WHEN fi2.name LIKE '%ommon%oint%3%' THEN fv2.value ELSE NULL END) AS "Comm 3",
+    MAX(CASE WHEN fi2.name LIKE '%ommon%oint%4%' THEN fv2.value ELSE NULL END) AS "Comm 4",
+    MAX(CASE WHEN fi2.name LIKE '%ommon%oint%5%' THEN fv2.value ELSE NULL END) AS "Comm 5",
+    MAX(CASE WHEN fi2.name LIKE '%ommon%oint%6%' THEN fv2.value ELSE NULL END) AS "Comm 6"
 FROM
     {feedback_value} fv
     LEFT JOIN {feedback_completed} fc ON fc.id = fv.completed
